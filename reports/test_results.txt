@@ -10,8 +10,16 @@ test_test_dataset_has_eight_findings (test_edit_checks.TestEditChecks.test_test_
 The deliberately seeded test dataset should produce eight findings. ... ok
 test_test_dataset_severity_counts (test_edit_checks.TestEditChecks.test_test_dataset_severity_counts)
 Verify the expected split of six errors and two review flags. ... ok
+test_cannot_answer_without_response (test_query_lifecycle.TestQueryLifecycle.test_cannot_answer_without_response) ... ok
+test_cannot_resolve_without_resolution (test_query_lifecycle.TestQueryLifecycle.test_cannot_resolve_without_resolution) ... ok
+test_cannot_skip_directly_from_open_to_closed (test_query_lifecycle.TestQueryLifecycle.test_cannot_skip_directly_from_open_to_closed) ... ok
+test_closed_query_cannot_be_reopened_directly_to_answered (test_query_lifecycle.TestQueryLifecycle.test_closed_query_cannot_be_reopened_directly_to_answered) ... ok
+test_complete_lifecycle_and_closure_date (test_query_lifecycle.TestQueryLifecycle.test_complete_lifecycle_and_closure_date) ... ok
+test_invalid_status_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_invalid_status_is_rejected) ... ok
+test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_unknown_query_id_is_rejected) ... ok
+test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 1.596s
+Ran 14 tests in 1.646s
 
 OK
