@@ -1,17 +1,17 @@
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmpc64pq5mi\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpikstl17t\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
 No actual data corrections were applied.
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmpwrmqtvm0\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpbutvgwm4\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
 No actual data corrections were applied.
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmp_1cwatim\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpigbqhe23\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
@@ -65,6 +65,6 @@ test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_
 test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 1.452s
+Ran 21 tests in 1.529s
 
 OK

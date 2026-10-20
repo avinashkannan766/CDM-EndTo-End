@@ -1,5 +1,5 @@
 CDM END-TO-END WORKFLOW RUN
-Started: 2026-10-20T18:36:45+05:30
+Started: 2026-10-20T18:41:04+05:30
 All study records are synthetic.
 Existing lifecycle and correction-audit workbooks are preserved.
 
@@ -7,19 +7,19 @@ STEP: Automated tests
 STATUS: PASS
 COMMAND: C:\Users\avina\anaconda3\python.exe -m unittest discover -s tests -p test_*.py -v
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmpc64pq5mi\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpikstl17t\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
 No actual data corrections were applied.
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmpwrmqtvm0\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpbutvgwm4\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
 No actual data corrections were applied.
 Correction audit workbook created successfully.
-Output: C:\Users\avina\AppData\Local\Temp\tmp_1cwatim\data_correction_audit_log.xlsx
+Output: C:\Users\avina\AppData\Local\Temp\tmpigbqhe23\data_correction_audit_log.xlsx
 Query references loaded: 2
 Source query workbook: unchanged
 Clinical data workbooks: unchanged
@@ -73,7 +73,7 @@ test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_
 test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 1.452s
+Ran 21 tests in 1.529s
 
 OK
 
@@ -143,4 +143,4 @@ Note: The summary reflects existing reports; it does not rerun the checks.
 
 OVERALL STATUS: PASS
 Note: lifecycle and correction-audit workbooks were not regenerated.
-Finished: 2026-10-20T18:36:49+05:30
+Finished: 2026-10-20T18:41:08+05:30
