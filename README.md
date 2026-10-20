@@ -5,7 +5,7 @@
 
 This project demonstrates a simulated, end-to-end Clinical Data Management (CDM) workflow using synthetic clinical-trial data, Microsoft Excel, and Python.
 
-The workflow covers study documentation, CRF design, data dictionary development, synthetic data generation, automated edit checks, query generation, query lifecycle management, correction audit-trail documentation, visit reconciliation, and consolidated reporting.
+The workflow covers study documentation, CRF design, data dictionary development, synthetic data generation, automated edit checks, query generation, query lifecycle management, correction audit-trail documentation, visit reconciliation, consolidated reporting, and automated testing.
 
 **Purpose:** Build practical, demonstrable skills relevant to entry-level Clinical Data Management roles.
 
@@ -21,7 +21,7 @@ The workflow covers study documentation, CRF design, data dictionary development
 | Study arms | Drug X and placebo |
 | Synthetic participants | 30 |
 | Planned visits | Screening, Baseline, Week 4, Week 8, Week 12 |
-| Tools | Python, Excel, openpyxl |
+| Tools | Python, Excel, openpyxl, unittest |
 
 The scenario demonstrates data-management processes rather than making clinical or treatment claims.
 
@@ -36,6 +36,7 @@ The scenario demonstrates data-management processes rather than making clinical 
 - Document proposed data corrections in a separate audit-trail workbook.
 - Reconcile participant visit records against expected visits and form tracking.
 - Consolidate results into Excel reports.
+- Verify expected validation behavior with automated tests.
 
 ## Workflow
 
@@ -125,7 +126,7 @@ The script `scripts/create_correction_audit_log.py` creates:
 
 The workbook contains three worksheets:
 
-- **Correction Audit:** a template for documenting the original value, proposed replacement, reason for the proposed change, review status, reviewer, and relevant dates.
+- **Correction Audit:** a template for documenting original values, proposed replacements, reasons, review status, reviewer, and relevant dates.
 - **Query Reference:** references the seven query records in the query lifecycle workbook to support traceability.
 - **Instructions:** describes the intended fields and their use.
 
@@ -147,6 +148,35 @@ It brings together:
 - A project overview and interpretation notes
 
 The summary script reads existing reports and consolidates them. It does not independently rerun the validation, query, or reconciliation checks.
+
+### 9. Automated Testing
+
+A Python `unittest` suite tests the edit-check engine against the clean and deliberately seeded test datasets.
+
+The current suite contains six automated tests:
+
+| Test | Expected result |
+|---|---|
+| Clean dataset | Zero findings |
+| Test dataset | Eight findings |
+| Expected edit-check IDs | All eight expected check IDs detected |
+| Severity classification | Six errors and two review flags |
+| Finding IDs | Unique, sequential, and repeatable |
+| Source data integrity | Source workbook SHA-256 fingerprints remain unchanged |
+
+The latest local test run passed all six tests.
+
+Run the suite from the project root:
+
+```powershell
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+The captured test output is saved in:
+
+`reports/test_results.txt`
+
+These tests verify the current implementation against the expected synthetic cases. They do not establish that the validation engine is comprehensive or suitable for production clinical-trial use.
 
 ## Repository Structure
 
@@ -172,35 +202,38 @@ CDM_EndToEnd/
 │   ├── query_lifecycle_working.xlsx
 │   ├── data_correction_audit_log.xlsx
 │   ├── reconciliation_report.xlsx
-│   └── cdm_summary_report.xlsx
-└── scripts/
-    ├── generate_study_data.py
-    ├── create_data_dictionary.py
-    ├── run_edit_checks.py
-    ├── create_query_log.py
-    ├── generate_queries.py
-    ├── manage_query_lifecycle.py
-    ├── create_correction_audit_log.py
-    ├── run_reconciliation.py
-    └── create_cdm_summary.py
+│   ├── cdm_summary_report.xlsx
+│   └── test_results.txt
+├── scripts/
+│   ├── generate_study_data.py
+│   ├── create_data_dictionary.py
+│   ├── run_edit_checks.py
+│   ├── create_query_log.py
+│   ├── generate_queries.py
+│   ├── manage_query_lifecycle.py
+│   ├── create_correction_audit_log.py
+│   ├── run_reconciliation.py
+│   └── create_cdm_summary.py
+└── tests/
+    └── test_edit_checks.py
 ```
 
-The tree describes the intended project layout. Confirm it against the actual local files before publishing; generated files may vary depending on which scripts have been run.
+This tree represents the intended layout. Confirm filenames against the current local repository before publishing, because generated reports may vary depending on which scripts have been run.
 
 ## Requirements
 
 - Python 3.10 or later
 - `openpyxl`
 
-Install the dependency from the project root:
+Install dependencies from the project root:
 
-```bash
+```powershell
 python -m pip install -r requirements.txt
 ```
 
 Alternatively:
 
-```bash
+```powershell
 python -m pip install openpyxl
 ```
 
@@ -210,43 +243,43 @@ Run commands from the project root.
 
 ### 1. Generate synthetic study data
 
-```bash
+```powershell
 python scripts/generate_study_data.py
 ```
 
 ### 2. Generate or refresh the data dictionary
 
-```bash
+```powershell
 python scripts/create_data_dictionary.py
 ```
 
 ### 3. Run edit checks
 
-```bash
+```powershell
 python scripts/run_edit_checks.py
 ```
 
 ### 4. Create the query-log template, if needed
 
-```bash
+```powershell
 python scripts/create_query_log.py
 ```
 
 ### 5. Generate draft queries
 
-```bash
+```powershell
 python scripts/generate_queries.py
 ```
 
 ### 6. Demonstrate the query lifecycle
 
-```bash
+```powershell
 python scripts/manage_query_lifecycle.py
 ```
 
 ### 7. Generate the correction audit-trail workbook
 
-```bash
+```powershell
 python scripts/create_correction_audit_log.py
 ```
 
@@ -254,7 +287,7 @@ This step requires `reports/query_lifecycle_working.xlsx` to exist. The script s
 
 ### 8. Run visit reconciliation
 
-```bash
+```powershell
 python scripts/run_reconciliation.py
 ```
 
@@ -262,13 +295,24 @@ The reconciliation script reads the file selected by `INPUT_FILE` in `scripts/ru
 
 ### 9. Create the consolidated report
 
-```bash
+```powershell
 python scripts/create_cdm_summary.py
 ```
 
-The lifecycle, correction audit, and summary scripts depend on outputs from earlier steps. Run the upstream scripts first when regenerating the workflow.
+### 10. Run automated tests
 
-**Note:** Some scripts may overwrite their own generated outputs. Review their file paths and behavior before rerunning them. Keep source data, test data, working copies, and reports clearly separated.
+```powershell
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+The test suite reads the existing synthetic source datasets and does not regenerate or overwrite them.
+
+**Execution notes:**
+
+- The lifecycle, correction audit, and summary scripts depend on outputs from earlier steps.
+- Some scripts overwrite their own generated outputs. Review their file paths and behavior before rerunning them.
+- The correction audit generator protects an existing audit workbook by refusing to overwrite it.
+- Keep source data, test data, working copies, and reports clearly separated.
 
 ## Skills Demonstrated
 
@@ -279,8 +323,11 @@ The lifecycle, correction audit, and summary scripts depend on outputs from earl
 - Draft query generation and status-transition validation
 - Visit and form-tracking reconciliation
 - Correction audit-trail documentation and traceability
+- Automated testing with Python's `unittest` framework
+- Regression checks and source-file integrity verification
 - Reproducible testing with deliberately seeded defects
 - Separation of source data from generated outputs
+- Git and GitHub version control
 
 ## Scope and Limitations
 
@@ -292,16 +339,18 @@ This project is a learning simulation, not a validated clinical system.
 - It does not establish GCP or CDISC compliance or certification.
 - It does not establish readiness for a real clinical database lock.
 - The correction audit workbook is a template; it does not apply or approve corrections.
+- Automated tests cover the current expected cases and do not guarantee that all defects will be detected.
 - Human review remains necessary before interpreting findings or changing source data.
 
 ## Future Improvements
 
-- Add automated unit tests for individual validation rules.
+- Add unit tests for individual validation rules and edge cases.
 - Expand cross-domain reconciliation for laboratory, adverse-event, and medication records.
 - Add explicit traceability from each edit check to its specification and test case.
 - Add a reproducible test runner and expected-results comparison.
 - Improve report versioning and record script execution metadata.
 - Develop a controlled correction workflow with validation, approval, and verification steps.
+- Add automated tests for query lifecycle transitions and reconciliation logic.
 
 ## Author
 

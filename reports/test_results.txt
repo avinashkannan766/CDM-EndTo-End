@@ -1,0 +1,17 @@
+test_clean_dataset_has_no_findings (test_edit_checks.TestEditChecks.test_clean_dataset_has_no_findings)
+The clean synthetic dataset should produce zero findings. ... ok
+test_finding_ids_are_unique_and_sequential (test_edit_checks.TestEditChecks.test_finding_ids_are_unique_and_sequential)
+Finding IDs should be unique and repeatable. ... ok
+test_source_datasets_are_not_modified (test_edit_checks.TestEditChecks.test_source_datasets_are_not_modified)
+Running checks must not change either source workbook. ... ok
+test_test_dataset_contains_expected_check_ids (test_edit_checks.TestEditChecks.test_test_dataset_contains_expected_check_ids)
+Verify the expected seeded defects were detected. ... ok
+test_test_dataset_has_eight_findings (test_edit_checks.TestEditChecks.test_test_dataset_has_eight_findings)
+The deliberately seeded test dataset should produce eight findings. ... ok
+test_test_dataset_severity_counts (test_edit_checks.TestEditChecks.test_test_dataset_severity_counts)
+Verify the expected split of six errors and two review flags. ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.596s
+
+OK
