@@ -1,3 +1,10 @@
+test_audit_template_does_not_claim_a_correction (test_correction_audit.TestCorrectionAudit.test_audit_template_does_not_claim_a_correction) ... ok
+test_creates_expected_sheets_and_columns (test_correction_audit.TestCorrectionAudit.test_creates_expected_sheets_and_columns) ... ok
+test_loads_query_references (test_correction_audit.TestCorrectionAudit.test_loads_query_references) ... ok
+test_missing_required_source_column_is_reported (test_correction_audit.TestCorrectionAudit.test_missing_required_source_column_is_reported) ... ok
+test_missing_source_workbook_is_reported (test_correction_audit.TestCorrectionAudit.test_missing_source_workbook_is_reported) ... ok
+test_query_reference_sheet_contains_all_source_queries (test_correction_audit.TestCorrectionAudit.test_query_reference_sheet_contains_all_source_queries) ... ok
+test_refuses_to_overwrite_existing_output (test_correction_audit.TestCorrectionAudit.test_refuses_to_overwrite_existing_output) ... ok
 test_clean_dataset_has_no_findings (test_edit_checks.TestEditChecks.test_clean_dataset_has_no_findings)
 The clean synthetic dataset should produce zero findings. ... ok
 test_finding_ids_are_unique_and_sequential (test_edit_checks.TestEditChecks.test_finding_ids_are_unique_and_sequential)
@@ -20,6 +27,6 @@ test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_
 test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
 
 ----------------------------------------------------------------------
-Ran 14 tests in 1.646s
+Ran 21 tests in 1.832s
 
 OK
