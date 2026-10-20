@@ -1,0 +1,146 @@
+CDM END-TO-END WORKFLOW RUN
+Started: 2026-10-20T18:36:45+05:30
+All study records are synthetic.
+Existing lifecycle and correction-audit workbooks are preserved.
+
+STEP: Automated tests
+STATUS: PASS
+COMMAND: C:\Users\avina\anaconda3\python.exe -m unittest discover -s tests -p test_*.py -v
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmpc64pq5mi\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmpwrmqtvm0\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmp_1cwatim\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+
+Reading: clinical_study_clean.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_clean.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+QRY-TEST-001: Open -> Answered
+QRY-TEST-001: Answered -> Resolved
+QRY-TEST-001: Resolved -> Closed
+QRY-TEST-001: Open -> Answered
+test_audit_template_does_not_claim_a_correction (test_correction_audit.TestCorrectionAudit.test_audit_template_does_not_claim_a_correction) ... ok
+test_creates_expected_sheets_and_columns (test_correction_audit.TestCorrectionAudit.test_creates_expected_sheets_and_columns) ... ok
+test_loads_query_references (test_correction_audit.TestCorrectionAudit.test_loads_query_references) ... ok
+test_missing_required_source_column_is_reported (test_correction_audit.TestCorrectionAudit.test_missing_required_source_column_is_reported) ... ok
+test_missing_source_workbook_is_reported (test_correction_audit.TestCorrectionAudit.test_missing_source_workbook_is_reported) ... ok
+test_query_reference_sheet_contains_all_source_queries (test_correction_audit.TestCorrectionAudit.test_query_reference_sheet_contains_all_source_queries) ... ok
+test_refuses_to_overwrite_existing_output (test_correction_audit.TestCorrectionAudit.test_refuses_to_overwrite_existing_output) ... ok
+test_clean_dataset_has_no_findings (test_edit_checks.TestEditChecks.test_clean_dataset_has_no_findings)
+The clean synthetic dataset should produce zero findings. ... ok
+test_finding_ids_are_unique_and_sequential (test_edit_checks.TestEditChecks.test_finding_ids_are_unique_and_sequential)
+Finding IDs should be unique and repeatable. ... ok
+test_source_datasets_are_not_modified (test_edit_checks.TestEditChecks.test_source_datasets_are_not_modified)
+Running checks must not change either source workbook. ... ok
+test_test_dataset_contains_expected_check_ids (test_edit_checks.TestEditChecks.test_test_dataset_contains_expected_check_ids)
+Verify the expected seeded defects were detected. ... ok
+test_test_dataset_has_eight_findings (test_edit_checks.TestEditChecks.test_test_dataset_has_eight_findings)
+The deliberately seeded test dataset should produce eight findings. ... ok
+test_test_dataset_severity_counts (test_edit_checks.TestEditChecks.test_test_dataset_severity_counts)
+Verify the expected split of six errors and two review flags. ... ok
+test_cannot_answer_without_response (test_query_lifecycle.TestQueryLifecycle.test_cannot_answer_without_response) ... ok
+test_cannot_resolve_without_resolution (test_query_lifecycle.TestQueryLifecycle.test_cannot_resolve_without_resolution) ... ok
+test_cannot_skip_directly_from_open_to_closed (test_query_lifecycle.TestQueryLifecycle.test_cannot_skip_directly_from_open_to_closed) ... ok
+test_closed_query_cannot_be_reopened_directly_to_answered (test_query_lifecycle.TestQueryLifecycle.test_closed_query_cannot_be_reopened_directly_to_answered) ... ok
+test_complete_lifecycle_and_closure_date (test_query_lifecycle.TestQueryLifecycle.test_complete_lifecycle_and_closure_date) ... ok
+test_invalid_status_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_invalid_status_is_rejected) ... ok
+test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_unknown_query_id_is_rejected) ... ok
+test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.452s
+
+OK
+
+STEP: Run edit checks
+STATUS: PASS
+COMMAND: C:\Users\avina\anaconda3\python.exe scripts/run_edit_checks.py
+
+Reading: clinical_study_clean.xlsx
+Total findings: 0
+Errors: 0
+Review flags: 0
+Report saved: C:\Users\avina\CDM_EndToEnd\reports\clean_edit_check_findings.xlsx
+
+Reading: clinical_study_test.xlsx
+Total findings: 8
+Errors: 6
+Review flags: 2
+Report saved: C:\Users\avina\CDM_EndToEnd\reports\test_edit_check_findings.xlsx
+
+Edit checks completed.
+
+STEP: Generate draft queries
+STATUS: PASS
+COMMAND: C:\Users\avina\anaconda3\python.exe scripts/generate_queries.py
+
+Query generation completed.
+Findings reviewed: 8
+Draft queries generated: 7
+Findings not converted to queries: 0
+Output saved: C:\Users\avina\CDM_EndToEnd\reports\generated_query_log.xlsx
+
+Generated query counts by status:
+Open: 7
+
+STEP: Run reconciliation on the configured input dataset
+STATUS: PASS
+COMMAND: C:\Users\avina\anaconda3\python.exe scripts/run_reconciliation.py
+
+Reconciliation completed.
+Participants: 30
+Expected Visit Combinations: 150
+Visit Rows: 150
+Unique Visit Combinations: 150
+Form Tracking Rows: 150
+Unique Tracking Combinations: 150
+Reconciliation Findings: 0
+
+Report saved: C:\Users\avina\CDM_EndToEnd\reports\reconciliation_report.xlsx
+
+No findings were generated by the implemented checks.
+
+STEP: Build consolidated summary
+STATUS: PASS
+COMMAND: C:\Users\avina\anaconda3\python.exe scripts/create_cdm_summary.py
+CDM summary report created successfully.
+Output: C:\Users\avina\CDM_EndToEnd\reports\cdm_summary_report.xlsx
+
+Clean edit-check findings: 0
+Test edit-check findings: 8
+  Errors: 6
+  Reviews: 2
+Generated query drafts: 7
+Lifecycle records: 7
+Reconciliation findings in saved report: 0
+
+Note: The summary reflects existing reports; it does not rerun the checks.
+
+OVERALL STATUS: PASS
+Note: lifecycle and correction-audit workbooks were not regenerated.
+Finished: 2026-10-20T18:36:49+05:30

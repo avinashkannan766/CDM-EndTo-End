@@ -1,3 +1,41 @@
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmpc64pq5mi\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmpwrmqtvm0\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+Correction audit workbook created successfully.
+Output: C:\Users\avina\AppData\Local\Temp\tmp_1cwatim\data_correction_audit_log.xlsx
+Query references loaded: 2
+Source query workbook: unchanged
+Clinical data workbooks: unchanged
+No actual data corrections were applied.
+
+Reading: clinical_study_clean.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_clean.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+
+Reading: clinical_study_test.xlsx
+QRY-TEST-001: Open -> Answered
+QRY-TEST-001: Answered -> Resolved
+QRY-TEST-001: Resolved -> Closed
+QRY-TEST-001: Open -> Answered
 test_audit_template_does_not_claim_a_correction (test_correction_audit.TestCorrectionAudit.test_audit_template_does_not_claim_a_correction) ... ok
 test_creates_expected_sheets_and_columns (test_correction_audit.TestCorrectionAudit.test_creates_expected_sheets_and_columns) ... ok
 test_loads_query_references (test_correction_audit.TestCorrectionAudit.test_loads_query_references) ... ok
@@ -27,6 +65,6 @@ test_unknown_query_id_is_rejected (test_query_lifecycle.TestQueryLifecycle.test_
 test_valid_transition_to_answered (test_query_lifecycle.TestQueryLifecycle.test_valid_transition_to_answered) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 1.832s
+Ran 21 tests in 1.452s
 
 OK
