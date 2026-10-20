@@ -10,6 +10,15 @@ The workflow covers study documentation, CRF design, data dictionary development
 
 > **Disclaimer:** This is an educational portfolio project. All study details and participant records are fictional and synthetically generated. It does not represent work on a real clinical trial, use of a production Electronic Data Capture (EDC) system, or a claim of GCP/CDISC certification.
 
+## Quick Results
+
+- **30 synthetic participants** and 150 expected participant-visit combinations.
+- **8 seeded data-quality findings** detected in the test dataset: 6 errors and 2 review flags.
+- **7 draft data queries** generated from eligible findings.
+- **21 automated tests** across edit checks, query lifecycle management, and correction audit documentation.
+- **End-to-end workflow:** latest recorded run passed all 21 tests and reported an overall status of `PASS`.
+
+All data is fictional. Findings support review and do not automatically modify source records.
 ## Study Scenario
 
 | Attribute | Description |
