@@ -5,7 +5,7 @@
 
 This project demonstrates a simulated, end-to-end Clinical Data Management (CDM) workflow using synthetic clinical-trial data, Microsoft Excel, and Python.
 
-The project covers study documentation, CRF design, data dictionary development, synthetic data generation, automated edit checks, query generation, query lifecycle management, visit reconciliation, and consolidated reporting.
+The workflow covers study documentation, CRF design, data dictionary development, synthetic data generation, automated edit checks, query generation, query lifecycle management, correction audit-trail documentation, visit reconciliation, and consolidated reporting.
 
 **Purpose:** Build practical, demonstrable skills relevant to entry-level Clinical Data Management roles.
 
@@ -23,16 +23,17 @@ The project covers study documentation, CRF design, data dictionary development,
 | Planned visits | Screening, Baseline, Week 4, Week 8, Week 12 |
 | Tools | Python, Excel, openpyxl |
 
-The scenario is used to demonstrate data-management processes rather than to make clinical or treatment claims.
+The scenario demonstrates data-management processes rather than making clinical or treatment claims.
 
 ## Project Objectives
 
 - Define a fictional study specification and CRF structure.
 - Document data fields, types, and code lists.
-- Generate clean synthetic data and a separate test dataset with deliberate defects.
+- Generate clean synthetic data and a separate test dataset containing deliberate defects.
 - Implement automated checks for selected data-quality issues.
 - Convert eligible findings into draft data queries.
 - Demonstrate controlled query-status transitions.
+- Document proposed data corrections in a separate audit-trail workbook.
 - Reconcile participant visit records against expected visits and form tracking.
 - Consolidate results into Excel reports.
 
@@ -72,28 +73,28 @@ The Python edit-check engine evaluates selected data-quality conditions and prod
 | Test findings classified as errors | 6 |
 | Test findings classified for review | 2 |
 
-The test findings include examples involving missing consent dates, missing visit dates, duplicate visits, missing laboratory results, unexpected units, date inconsistencies, medication date ordering, and an age-related review flag.
+The test findings include missing consent dates, missing visit dates, duplicate visits, missing laboratory results, unexpected units, date inconsistencies, medication date ordering, and an age-related review flag.
 
-The severity assigned by a programmed check is a prompt for investigation, not an automatic decision to change source data.
+A programmed finding is a prompt for investigation, not an automatic decision to change source data.
 
 ### 4. Draft Query Generation
 
-The query-generation script converts eligible test findings into draft queries.
+The query-generation script converts eligible findings into draft queries.
 
 - Seven query drafts were generated.
-- The drafts include a subject reference, check ID, query description, and workflow status.
-- A review finding can also generate a query when its specification requires one.
+- The drafts include query identifiers, subject references, edit-check identifiers, and query descriptions.
+- Findings that do not require a query are excluded according to the configured specification.
 - Query generation does not modify the underlying study data.
 
 These are fictional training examples, not actual communications with clinical sites.
 
 ### 5. Query Lifecycle Demonstration
 
-A separate working copy demonstrates the following query lifecycle:
+A separate working copy demonstrates the query lifecycle:
 
 `Open → Answered → Resolved → Closed`
 
-The script validates allowed transitions and required response or resolution information. It also demonstrates rejection of an invalid direct transition from Open to Closed.
+The script validates allowed status transitions and required response or resolution information. It also demonstrates rejection of an invalid direct transition from Open to Closed.
 
 The demonstration uses fictional response and resolution text. It does not represent a real site-query exchange.
 
@@ -114,9 +115,25 @@ The reconciliation script compares expected participant-visit combinations with 
 
 The script detected a duplicate Week 8 visit for participant `DM001-005`, reporting two rows for the same participant-visit combination.
 
-This confirms that the implemented duplicate-visit check can identify the deliberately seeded discrepancy. Reconciliation is limited to the checks currently implemented; it is not a comprehensive review of every clinical field or domain.
+Reconciliation is limited to the checks currently implemented; it is not a comprehensive review of every clinical field or domain.
 
-### 7. Consolidated Reporting
+### 7. Correction Audit-Trail Documentation
+
+The script `scripts/create_correction_audit_log.py` creates:
+
+`reports/data_correction_audit_log.xlsx`
+
+The workbook contains three worksheets:
+
+- **Correction Audit:** a template for documenting the original value, proposed replacement, reason for the proposed change, review status, reviewer, and relevant dates.
+- **Query Reference:** references the seven query records in the query lifecycle workbook to support traceability.
+- **Instructions:** describes the intended fields and their use.
+
+The audit workbook is separate from the source clinical data and query lifecycle workbook. Creating it does not apply a correction or automatically approve a proposed change.
+
+This is a documentation template for synthetic training data. It does not implement an authorized production correction process or establish a complete, immutable audit trail.
+
+### 8. Consolidated Reporting
 
 The consolidated workbook is saved as:
 
@@ -135,6 +152,9 @@ The summary script reads existing reports and consolidates them. It does not ind
 
 ```text
 CDM_EndToEnd/
+├── .gitignore
+├── README.md
+├── requirements.txt
 ├── data/
 │   ├── clinical_study_clean.xlsx
 │   ├── clinical_study_test.xlsx
@@ -150,47 +170,105 @@ CDM_EndToEnd/
 │   ├── test_edit_check_findings.xlsx
 │   ├── generated_query_log.xlsx
 │   ├── query_lifecycle_working.xlsx
+│   ├── data_correction_audit_log.xlsx
 │   ├── reconciliation_report.xlsx
 │   └── cdm_summary_report.xlsx
-├── scripts/
-│   ├── generate_study_data.py
-│   ├── run_edit_checks.py
-│   ├── generate_queries.py
-│   ├── manage_query_lifecycle.py
-│   ├── run_reconciliation.py
-│   └── create_cdm_summary.py
-└── README.md
+└── scripts/
+    ├── generate_study_data.py
+    ├── create_data_dictionary.py
+    ├── run_edit_checks.py
+    ├── create_query_log.py
+    ├── generate_queries.py
+    ├── manage_query_lifecycle.py
+    ├── create_correction_audit_log.py
+    ├── run_reconciliation.py
+    └── create_cdm_summary.py
 ```
 
-*This tree reflects the expected project layout; confirm filenames against the current local repository before publishing.*
+The tree describes the intended project layout. Confirm it against the actual local files before publishing; generated files may vary depending on which scripts have been run.
 
-## How to Run
-
-### Requirements
+## Requirements
 
 - Python 3.10 or later
 - `openpyxl`
 
-Install the dependency:
+Install the dependency from the project root:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Alternatively:
 
 ```bash
 python -m pip install openpyxl
 ```
 
-Run the scripts from the project root, in this order:
+## How to Run
+
+Run commands from the project root.
+
+### 1. Generate synthetic study data
 
 ```bash
 python scripts/generate_study_data.py
+```
+
+### 2. Generate or refresh the data dictionary
+
+```bash
+python scripts/create_data_dictionary.py
+```
+
+### 3. Run edit checks
+
+```bash
 python scripts/run_edit_checks.py
+```
+
+### 4. Create the query-log template, if needed
+
+```bash
+python scripts/create_query_log.py
+```
+
+### 5. Generate draft queries
+
+```bash
 python scripts/generate_queries.py
+```
+
+### 6. Demonstrate the query lifecycle
+
+```bash
 python scripts/manage_query_lifecycle.py
+```
+
+### 7. Generate the correction audit-trail workbook
+
+```bash
+python scripts/create_correction_audit_log.py
+```
+
+This step requires `reports/query_lifecycle_working.xlsx` to exist. The script stops rather than overwriting an existing correction audit workbook.
+
+### 8. Run visit reconciliation
+
+```bash
 python scripts/run_reconciliation.py
+```
+
+The reconciliation script reads the file selected by `INPUT_FILE` in `scripts/run_reconciliation.py`. Select the clean dataset for clean-data results or the test dataset to reproduce the duplicate-visit finding.
+
+### 9. Create the consolidated report
+
+```bash
 python scripts/create_cdm_summary.py
 ```
 
-**Important:** The reconciliation script reads the file selected by `INPUT_FILE` in `scripts/run_reconciliation.py`. Select the clean dataset for clean-data results or the test dataset to reproduce the duplicate-visit finding.
+The lifecycle, correction audit, and summary scripts depend on outputs from earlier steps. Run the upstream scripts first when regenerating the workflow.
 
-The lifecycle script and summary script use existing outputs. Run the relevant upstream scripts first if you want to regenerate those outputs.
+**Note:** Some scripts may overwrite their own generated outputs. Review their file paths and behavior before rerunning them. Keep source data, test data, working copies, and reports clearly separated.
 
 ## Skills Demonstrated
 
@@ -200,19 +278,21 @@ The lifecycle script and summary script use existing outputs. Run the relevant u
 - Data-quality checks and defect classification
 - Draft query generation and status-transition validation
 - Visit and form-tracking reconciliation
-- Traceable reporting and separation of source data from generated outputs
+- Correction audit-trail documentation and traceability
 - Reproducible testing with deliberately seeded defects
+- Separation of source data from generated outputs
 
 ## Scope and Limitations
 
 This project is a learning simulation, not a validated clinical system.
 
-- The data are synthetic.
-- The checks cover only the rules implemented in the scripts.
+- All study records are synthetic.
+- Checks cover only the rules implemented in the scripts.
 - The project does not use a production EDC system or demonstrate real clinical-trial operations.
 - It does not establish GCP or CDISC compliance or certification.
 - It does not establish readiness for a real clinical database lock.
-- Human review remains necessary before interpreting findings or changing any source data.
+- The correction audit workbook is a template; it does not apply or approve corrections.
+- Human review remains necessary before interpreting findings or changing source data.
 
 ## Future Improvements
 
@@ -221,6 +301,7 @@ This project is a learning simulation, not a validated clinical system.
 - Add explicit traceability from each edit check to its specification and test case.
 - Add a reproducible test runner and expected-results comparison.
 - Improve report versioning and record script execution metadata.
+- Develop a controlled correction workflow with validation, approval, and verification steps.
 
 ## Author
 
